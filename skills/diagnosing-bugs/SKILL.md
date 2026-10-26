@@ -7,7 +7,7 @@ description: Diagnosis loop for hard bugs and performance regressions. Use when 
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
-When exploring the codebase, read `CONTEXT.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
+If the repo has `docs/kb/index.md`, read it, then the glossary it points to, and check `decision` and `gotcha` concepts in the area you're touching. With no KB, skip this.
 
 ## Redact
 
@@ -89,6 +89,11 @@ Do not proceed until you have reproduced **and** minimised.
 
 Generate **3–5 ranked hypotheses** before testing any of them. Single-hypothesis generation anchors on the first plausible idea.
 
+Build them from evidence, not from reading code cold:
+
+- **Recent change**: `git log --oneline -20 -- <area>` and `git diff <last-known-good>` on the files the repro touches. A bug that appeared recently usually lives in a recent commit.
+- **Working twin**: find code in this codebase that does the same thing and works (another handler, another job, the same call in a passing test). List every difference between it and the broken path; each difference is a candidate.
+
 Each hypothesis must be **falsifiable**: state the prediction it makes.
 
 > Format: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse."
@@ -127,10 +132,15 @@ If a correct seam exists:
 4. Watch it pass.
 5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
 
-## Phase 6: Cleanup
+**Count the fixes.** If a fix doesn't turn the loop green, return to Phase 3 with what it taught you. After the **third** failed fix, stop fixing. Each fix exposing a new problem somewhere else is the sign of a wrong design, not a wrong hypothesis. Tell the user what the three attempts showed and ask whether the design of this area should change before a fourth attempt.
+
+## Phase 6: Blast radius + cleanup
+
+**Blast radius.** List everything that depends on the code or config you changed: callers (grep them), scheduled jobs, services that read the same config, files or permissions the change touches. Re-check each one with a real run, not by reading. A job or scan that processed **0 items** after your change is a failure, not a pass: print its counts and confirm they are non-zero.
 
 Required before declaring done:
 
+- [ ] Every dependent in the blast-radius list re-checked, with its output shown
 - [ ] Original repro no longer reproduces (re-run the Phase 1 loop)
 - [ ] Regression test passes (or absence of seam is documented)
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)

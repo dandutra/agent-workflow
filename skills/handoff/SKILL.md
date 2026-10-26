@@ -1,16 +1,31 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document for another agent to pick up.
-argument-hint: "What will the next session be used for?"
+description: Write a handoff document for the next session, or resume from the newest one.
+argument-hint: "What will the next session be used for? Or 'resume'."
 disable-model-invocation: true
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+`<project>` is the basename of the git repo root (or of the working directory outside a repo).
 
-Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
+## Resume
 
-Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
+If the user passed `resume`, or this is the start of a session and they asked to pick up where the last one left off:
 
-Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
+1. List `~/.claude/handoffs/<project>/` and read the newest file in full.
+2. Follow its "Start here" steps and load the skills it names.
+3. Tell the user, in two or three lines, what the handoff says comes next.
 
-If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+Stop there; don't write a new handoff.
+
+## Write
+
+1. Write the handoff to `~/.claude/handoffs/<project>/YYYY-MM-DD-<topic>.md` (today's date, a short kebab-case topic). Create the folder if needed.
+2. Contents:
+   - **Next session's job**, in one or two lines. If the user passed arguments, they describe it; tailor the document to it.
+   - **Start here**: ordered first steps.
+   - **Facts already established**: what the next agent would otherwise re-derive.
+   - **Suggested skills**: which skills the next agent should load.
+   - Reference specs, plans, KB concepts, issues, commits and diffs by path or URL. Don't copy their content.
+   - Redact secrets, keys, passwords and personal data.
+3. If `docs/kb/.inbox.md` exists and has entries, show them and propose which to promote into KB concepts (type, target path, one-line reason) and which to discard. Promote only what the user approves, in the format the `domain-modeling` skill's KB-FORMAT.md describes, then remove the handled entries from the inbox.
+4. Print the handoff's full path.

@@ -21,8 +21,10 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 - **Tool economy**: did the agent make expensive tool calls that could be streamlined? Is there any custom tooling (CLI's, MCP's) that is particularly token-inefficient? _Use when_ the agent made an expensive tool call.
 - **No-ops**: look for instructions in steering files that don't modify the agent's behavior. _Use when_ the steering files are large and unwieldy.
 - **Information access**: look for opportunities to increase the agent's access to information. Teeing dev server logs, readonly access to third-party services. _Use when_ a crucial piece of information was not available to the agent.
+- **Knowledge**: a decision, gotcha or rule the session discovered that the next agent would otherwise rediscover. Propose it as a KB concept (type from `docs/kb/index.md`, target path, one-line reason); include the entries in `docs/kb/.inbox.md`. _Use when_ the repo has `docs/kb/`.
+- **Repeated review comment**: the same review comment made twice (in this session, or in earlier review output or PR comments) moves into `REVIEW.md` as a rule, or into an automated check if it is mechanical. _Use when_ a reviewer flagged the same thing more than once.
 
-4. Present these candidates to the user, in order of severity.
+4. Present these candidates to the user, in order of severity. Write KB concepts and `REVIEW.md` rules only for the ones the user approves.
 
 ## Reference
 
