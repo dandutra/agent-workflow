@@ -1,0 +1,25 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go build ./...
+      - run: go vet ./...
+      - name: gofmt -l
+        run: |
+          out=$(gofmt -l .)
+          if [ -n "$out" ]; then echo "Not gofmt'd:"; echo "$out"; exit 1; fi
+      # Keep in step with the version CLAUDE.md names. If it needs a newer Go than
+      # go.mod, the install relies on setup-go@v5's GOTOOLCHAIN=auto; v6 sets local.
+      - run: go install honnef.co/go/tools/cmd/staticcheck@2026.2.2
+      - run: staticcheck ./...
+      - run: go test ./...
