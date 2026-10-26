@@ -6,9 +6,14 @@ on:
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   review:
-    if: github.event.pull_request.draft == false
+    # Fork PRs get no secrets, so they skip rather than fail.
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,4 +31,5 @@ jobs:
             Review PR #${{ github.event.pull_request.number }} against REVIEW.md and CLAUDE.md, on the Standards axis only.
             Start with a count of findings. Tag each Important, Nit or Pre-existing, cite file:line,
             skip what CI already checks, and cap Nits at 5. Post one PR comment with gh.
-          claude_args: "--allowedTools Bash(gh pr:*),Bash(gh issue view:*),Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"
+          claude_args: |
+            --allowedTools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh issue view:*),Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"

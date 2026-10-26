@@ -45,7 +45,7 @@ Needs `jq`. The script is safe to re-run. It moves anything it would replace int
 | `unslop-log.sh` | Stop | Logs AI-writing tells in Claude's replies to `~/.claude/logs/unslop-hits.jsonl`. It never blocks |
 | `kb-capture.sh` | Stop (async) | Asks Jev whether a reply holds a decision or gotcha worth keeping, and appends hits to the project's gitignored `docs/kb/.inbox.md`. Off until `JEV_API_URL` and `JEV_API_KEY` are set |
 
-**Stack profiles.** [stacks/](stacks/README.md) holds starting files for new projects: the edit hook, the Stop gate, CI, a PR template and the Claude review workflow, for `ts` and `static-site`. `go` is next.
+**Stack profiles.** [stacks/](stacks/README.md) holds starting files for new projects: the edit hook, the Stop gate, CI, a PR template and the Claude review workflow, for `ts`, `static-site` and `go`.
 
 ## Credits
 
