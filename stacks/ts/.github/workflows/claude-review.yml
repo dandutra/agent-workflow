@@ -1,0 +1,29 @@
+# Claude Code as the PR reviewer, on the subscription's limits.
+# Setup: run `claude setup-token` locally and store the result as the repo
+# secret CLAUDE_CODE_OAUTH_TOKEN. An agent's approval never counts as a person's.
+name: Claude review
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Review PR #${{ github.event.pull_request.number }} against REVIEW.md, CLAUDE.md and docs/kb/.
+            Start with a count of findings. Tag each Important, Nit or Pre-existing, cite file:line,
+            skip what CI already checks, and cap Nits at 5. Post one PR comment with gh.
+          claude_args: "--allowedTools Bash(gh pr:*),Bash(gh issue view:*),Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"

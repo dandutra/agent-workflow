@@ -44,7 +44,7 @@ One message, three Agent calls. Each gets the diff command, the commit list, and
 | Spec | `reviewer-spec` | `sonnet` | the spec path or fetched body |
 | Correctness | `reviewer-correctness` | `opus` | the touched area's KB gotchas, if any |
 
-Skip Spec when there is no spec. If the diff touches auth, sessions, CSRF, file uploads or database migrations, also run `/security-review` and fold its findings into Correctness.
+Skip Spec when there is no spec. If the repo's `CLAUDE.md` or `REVIEW.md` limits the review to certain axes, dispatch only those. If the diff touches auth, sessions, CSRF, file uploads or database migrations, also run `/security-review` and fold its findings into Correctness.
 
 Every finding comes back tagged:
 
