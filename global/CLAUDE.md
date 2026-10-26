@@ -1,9 +1,5 @@
 # Global instructions
 
-## Skills
-
-When the user types a slash workflow (`/review`, `/tdd`, `/handoff`...), load that skill with the Skill tool before doing anything else.
-
 ## Change scope
 
 - Before writing, list every place the change must reach: callers, tests, fixtures, config, exports.
