@@ -52,3 +52,7 @@ Needs `jq`. The script is safe to re-run. It moves anything it would replace int
 - Most skills started as copies of [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT, [license](licenses/mattpocock-skills.LICENSE)) and have since been edited.
 - Rules in `tdd`, `diagnosing-bugs` and `/review` are adapted from [superpowers](https://github.com/obra/superpowers) by Jesse Vincent (MIT) and from Anthropic's code-review plugin for Claude Code.
 - The change-scope rules in `global/CLAUDE.md` come from the Ponytail skill (MIT).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
