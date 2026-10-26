@@ -172,8 +172,9 @@ Session A writes `ts` and `static-site`. Session B writes `go` from what it buil
   - `**Blocked by:**` becomes GitHub's native issue dependencies.
   - No Projects board.
 - Add an Issue form: Source, Blocked by, Touches, Read first, **Seams under test**, Acceptance.
-- Retire `current-work.md` and add a short "how we work" section to CLAUDE.md. Closed tickets stay in git history.
-- **Deferred until after the 3 projects:** the OKF migration of schedule-matcher. Approve the types after the first folder (`database/`) is converted. Starting guess: `gotcha`, `decision`, `domain`, `runbook`, `audit`.
+- **Deferred until after the 3 projects:**
+  - The OKF migration of schedule-matcher. Approve the types after the first folder (`database/`) is converted. Starting guess: `gotcha`, `decision`, `domain`, `runbook`, `audit`.
+  - Retire `current-work.md` and add a short "how we work" section to CLAUDE.md. Closed tickets stay in git history.
 
 ## After setup
 
