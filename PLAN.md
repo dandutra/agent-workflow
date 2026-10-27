@@ -59,7 +59,7 @@ Skills currently live as symlinks `~/.claude/skills/<name> → ~/.agents/skills/
 
 ### A4. Settings fragment and hooks
 
-- **Model and effort:** keep `model: opus`. Move `effortLevel: high` from the stale `claude-opus-5` key to `claude-opus-5-5`.
+- **Model and effort:** keep `model: opus`. Set `effortLevel: medium` (the model's default) on `claude-opus-5-5`, and drop the stale `claude-opus-5` key.
 - **Context nudge** (decided over an auto-handoff hook, because a turn is not a task):
   - `statusline.sh` colors the ctx segment red at 150k tokens;
   - a UserPromptSubmit hook adds "context is over 150k: offer a handoff at the next natural break" once the transcript shows usage over 150k.
