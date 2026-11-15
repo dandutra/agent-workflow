@@ -1,6 +1,6 @@
 ---
 name: retro
-description: "Conduct a retrospective on a coding session."
+description: "Conduct a retrospective on a coding session, or a weekly one across a project's recent sessions."
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,14 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 1. Call the Skill tool with `writing-for-agents` for the writing style guide.
 
 2. Read the primary sources for the session the user specifies. This may mean searching through session logs on this machine. If the user doesn't specify a session, default to the current one.
+
+   **Weekly mode** (`/retro weekly [project]`, default the current repo): the sources are every session in that project since the last weekly retro, which is the newest `retro:` row in `experiments.md` or 7 days.
+   - `~/.claude/usage-data/session-meta/*.json` whose `project_path` matches, joined by session id to `~/.claude/usage-data/facets/*.json`. Read `friction_counts` and `friction_detail`. The facets are written by `/insights`, so ask the user to run it first when the newest report is older than the window.
+   - `docs/kb/.inbox.md`: the repeatable findings `kb-writer` filed.
+   - The **Deviations** and **Review** sections of PRs merged in the window (`gh pr list --state merged --search "merged:>=<date>"`).
+   - `scripts/usage-trend.py --since <date> --project <name>` from this workflow repo, for model and effort drift.
+
+   Cluster the frictions and findings by class. A class seen twice is a candidate. Propose its fix in this order, cheapest and most reliable first: an automated check, a `.claude/rules/` file scoped to the paths, a `REVIEW.md` line, a KB gotcha, a CLAUDE.md line.
 
 3. Look for candidates for improvement in these categories.
 
@@ -25,6 +33,8 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 - **Repeated review comment**: the same review comment made twice (in this session, or in earlier review output or PR comments) moves into `REVIEW.md` as a rule, or into an automated check if it is mechanical. _Use when_ a reviewer flagged the same thing more than once.
 
 4. Present these candidates to the user, in order of severity. Write KB concepts and `REVIEW.md` rules only for the ones the user approves.
+
+5. In weekly mode, each approved change gets a row in the workflow repo's `experiments.md` with its metric and start date, and the run itself adds a `retro: <date>` row. Prune any trial past its two-week mark with no effect.
 
 ## Reference
 

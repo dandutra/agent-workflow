@@ -34,3 +34,5 @@ Skip anything the listed tools enforce (formatting, lint rules, type errors).
 ## Output
 
 Under 400 words. One line per finding: tag (Important / Nit / Pre-existing), file:line, the rule or smell, and the quoted hunk or a one-line paraphrase. Findings on lines the diff did not change are Pre-existing.
+
+Run no test suites and nothing that writes: the test database is shared with the implementer's run. Read code, `git show`, `git log`, `grep`, and single read-only commands only.

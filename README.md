@@ -28,13 +28,13 @@ Needs `jq`. The script is safe to re-run. It moves anything it would replace int
 
 **Skills.** The ones I run most:
 
-- `/review`: three parallel reviewers (Standards and Spec on Sonnet, Correctness on Opus), then an Opus verifier that drops false positives. The report opens with a count of findings tagged Important, Nit or Pre-existing.
-- `/implement`: runs on Sonnet. It builds a ticket test-first at the ticket's seams, fixes every Important finding from `/review`, and allows at most two re-review rounds.
+- `/review`: picks a tier (0 to 3) with `tier.sh` from the repo's `REVIEW.md` path map, test coverage at the seams, fan-in and size, then runs the reviewers that tier asks for. Tier 3 runs Standards and Spec on Sonnet, Correctness on Opus at high effort, and an Opus verifier that drops false positives. The report opens with the tier and a count of findings tagged Important, Nit or Pre-existing.
+- `/ship <n>`: takes one ticket to an open PR on Sonnet: preflight, test-first build, the ticket's live check, `/review` at its tier, KB update through `kb-writer`, push and PR. Start it with the `ship` shell function from [shell/ship.zsh](shell/ship.zsh) so follow-up turns stay on Sonnet too. Invoking it confirms the push of its ticket branch.
 - `/tdd` and `/diagnosing-bugs`: test-first and debugging loops, with extra rules from superpowers. Show the red output, name the break a test catches, stop after 3 failed fixes, and check the blast radius before calling a fix done.
 - `/handoff`: writes a handoff to `~/.claude/handoffs/<project>/` and resumes from the newest one.
 - `domain-modeling`: writes glossary terms and decisions into a project's knowledge base. Its [KB-FORMAT.md](skills/domain-modeling/KB-FORMAT.md) is the convention every project's `docs/kb/` follows (OKF v0.2).
 
-**Agents.** `reviewer-standards`, `reviewer-spec`, `reviewer-correctness` and `verifier` are what `/review` dispatches. `kb-scout` runs read-only lookups in a project's KB, on Haiku.
+**Agents.** `reviewer-standards`, `reviewer-spec`, `reviewer-correctness` and `verifier` are what `/review` dispatches. `kb-scout` runs read-only lookups in a project's KB, on Haiku. `kb-writer` writes gotchas, runbooks and index upkeep on Sonnet.
 
 **Hooks.**
 

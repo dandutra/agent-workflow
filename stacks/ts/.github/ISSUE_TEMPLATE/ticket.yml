@@ -1,0 +1,77 @@
+name: Ticket
+description: One worked-out piece of build work, with its source, the change, the seams under test and the done-when.
+labels: ["ticket"]
+body:
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Where this came from. The wayfinder ticket or KB decision it implements (link it), or a bug with its evidence.
+    validations:
+      required: true
+  - type: input
+    id: blocked-by
+    attributes:
+      label: Blocked by
+      description: Issue numbers, or "nothing". After creating the issue, add each one as a native dependency under Relationships in the sidebar. A "rebases onto" edge stays here as text.
+      placeholder: "nothing"
+    validations:
+      required: true
+  - type: textarea
+    id: touches
+    attributes:
+      label: Touches
+      description: Files, modules and functions this changes, checked against main today. For new code, where it goes.
+    validations:
+      required: true
+  - type: textarea
+    id: read-first
+    attributes:
+      label: Read first
+      description: The KB concepts (docs/kb/) and glossary terms a worker needs before editing.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Problem and change
+      description: What is missing or wrong, the decision behind it (and whose it is), and the change.
+    validations:
+      required: true
+  - type: textarea
+    id: seams
+    attributes:
+      label: Seams under test
+      description: The seams the tests drive (an HTTP controller, a repository against a real database, an adapter run against a recorded response, a rendered component). Name each one before any code is written. If there is no failing test to write first, say why.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and checks
+      description: What could go wrong that tests at the seams would not catch, each with the check that handles it. A new env var or secret (every place it must reach), a live API that may differ from its fake, data a migration could lose, a shared resource such as the test database. Write "none" only after thinking it through.
+    validations:
+      required: true
+  - type: textarea
+    id: live-check
+    attributes:
+      label: Live check
+      description: The command or manual step run against the real system before the PR opens (a dev API call, one real tenant, a screen in the browser), and what it must show. "none" when the change calls nothing external.
+      placeholder: "none"
+    validations:
+      required: true
+  - type: dropdown
+    id: review-tier
+    attributes:
+      label: Review tier
+      description: The floor for /review. tier.sh may raise it. 0 docs only, 1 small and tested, 2 feature work, 3 critical path.
+      options: ["2", "0", "1", "3"]
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: The checkable done-when list. the repo's check command passes, and lasting lessons move into docs/kb/ in the same PR.
+    validations:
+      required: true

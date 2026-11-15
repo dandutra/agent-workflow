@@ -42,3 +42,7 @@ The glossary is definitions only: no implementation details, no spec, no scratch
 ### Record decisions sparingly
 
 Offer to write a `decision` concept only when it is hard to reverse, surprising without context, and the result of a real trade-off. If any of the three is missing, skip it. Each new concept gets a link from the nearest `index.md`.
+
+### Hand off the upkeep
+
+The glossary terms and decisions are yours to write, because this session did the reasoning. At the end, dispatch one `kb-writer` agent for the index upkeep: links from the nearest `index.md`, cross-links between concepts, and gotcha or runbook lines the discussion surfaced.

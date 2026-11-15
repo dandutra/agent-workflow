@@ -18,3 +18,5 @@ Report three kinds of finding, quoting the spec line for each:
 Also check that each seam the spec lists has a test in the diff. A listed seam with no test is Important.
 
 Under 400 words. One line per finding: tag (Important / Nit / Pre-existing), file:line or "absent", the quoted spec line, what is wrong.
+
+Run no test suites and nothing that writes: the test database is shared with the implementer's run. Read code, `git show`, `git log`, `grep`, and single read-only commands only.

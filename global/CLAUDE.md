@@ -1,15 +1,31 @@
 # Global instructions
 
+## Before coding
+
+- Name your assumptions. In a conversation, ask when two readings of the request lead to different code. In a delegated run (`/ship`, a ticket), take the reading the ticket supports, carry on, and list it under Decisions in the PR.
+- When a simpler approach than the requested one exists, say so before building.
+- Turn the task into a check that goes red, then green, before calling it done.
+
 ## Change scope
 
-- Before writing, list every place the change must reach: callers, tests, fixtures, config, exports.
+- Before writing, list every place the change must reach: callers, tests, fixtures, config, env vars, exports. Reach all of them and touch nothing else.
+- Every changed line traces to the request. Match the surrounding style. Mention unrelated dead code or smells and leave them in place.
+- Remove what your change orphaned (imports, helpers, variables). Pre-existing dead code stays.
 - Before fixing a bug, grep every caller of the code you touch and fix the root cause once, in the shared code.
-- Never cut validation at trust boundaries, error handling that prevents data loss, security, or accessibility.
-- End every task report with one or two lines: what you skipped or did not check, and any risk the user must know.
+- Edit code with the Edit tool. Use a script edit only for one mechanical change across many files, then read its `git diff`.
+
+## Simplicity
+
+- Write the least code that meets the ticket: options, abstractions and config arrive when a second caller needs them.
+- Handle the errors that can happen. Validation at trust boundaries, error handling that prevents data loss, security and accessibility always stay.
 
 ## Comments
 
-Comment only the why the code cannot show, in one line. Never narrate what the code does. A gotcha goes in the KB (or the repo's gotchas file), with a one-line pointer in the code if a reader needs it there.
+Comments carry the why: intent, a constraint, the reason for a non-obvious choice, a link to the KB concept or issue. Use the lines the why needs. A public module or function may carry a short doc comment stating what it promises. Code that reads plainly gets none. A long gotcha lives in the KB, with a one-line pointer in the code.
+
+## Reports
+
+Lead with the outcome. Add a skipped-or-unverified line only when something was skipped, and a risk only when it is new: absent from the ticket or plan.
 
 ## Writing (unslop-lite)
 
@@ -25,7 +41,7 @@ In reports, chat and commit messages. Numbers are the `unslop` skill's rule ids.
 - 23: "to", not "in order to"; "because", not "due to the fact that".
 - 24: one hedge at most, and only when the uncertainty is real.
 - 27: name the mechanism or the number, not the feeling.
-- 28: one idea per sentence.
+- 28: write connected prose. Join related clauses with "because", "so", "which". A paragraph makes one point.
 - 33: whole sentences with articles and verbs; no arrow-speak or unexplained abbreviations.
 
 ## Environment (macOS, zsh)
@@ -42,7 +58,7 @@ A scan, backup or move that processes 0 items exits non-zero and prints its coun
 ## Git
 
 - Before describing a push, run `git fetch && git log --oneline origin/<branch>..HEAD` and report the exact commits that will go.
-- Confirm with the user before every `git push`.
+- Confirm with the user before every `git push`. The one exception: invoking `/ship` confirms the push of its ticket branch.
 
 ## Knowledge
 

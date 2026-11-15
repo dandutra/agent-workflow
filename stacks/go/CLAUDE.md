@@ -13,7 +13,7 @@ All five pass before a change is done, with `gofmt -l .` printing nothing. CI ru
 ## How we work
 
 - Work lives in GitHub Issues (`docs/agents/issue-tracker.md`). Each issue lists **Seams under test**; `/tdd` tests there.
-- `/implement` builds a ticket, then `/review` runs all three axes (Standards, Spec, Correctness).
+- `/ship <n>` takes a ticket to a PR. `/review` runs at the tier `REVIEW.md` and the ticket set. Tickets use `.github/ISSUE_TEMPLATE/ticket.yml`: fill **Risks and checks**, **Live check** and **Review tier** when the ticket is written.
 - [REVIEW.md](REVIEW.md) sets the risk tier of each path and what a review checks. The owner reads high-tier paths line by line, and an agent's approval never stands in for that.
 
 ## UI
