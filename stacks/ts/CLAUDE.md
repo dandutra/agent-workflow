@@ -9,7 +9,7 @@
 ## How we work
 
 - Work lives in GitHub Issues (`docs/agents/issue-tracker.md`). Each issue lists **Seams under test**; `/tdd` tests there.
-- `/implement` builds a ticket, then `/review` runs all three axes (Standards, Spec, Correctness).
+- `/ship <n>` takes a ticket to a PR. `/review` runs at the tier `REVIEW.md` and the ticket set. Tickets use `.github/ISSUE_TEMPLATE/ticket.yml`: fill **Risks and checks**, **Live check** and **Review tier** when the ticket is written.
 - Knowledge lives in `docs/kb/`. Read `docs/kb/index.md` before changing code. When a ticket closes, its lasting lessons move into the KB in the same PR.
 
 ## UI

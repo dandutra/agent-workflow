@@ -6,13 +6,18 @@ An agent's approval never counts as a person's. The agent posts findings, and th
 
 ## Risk tiers
 
-Set the tier from the paths the diff touches. The highest tier wins.
+`/review` runs `tier.sh`, which reads the globs below. A critical path forces tier 3, and a diff made only of low paths is tier 0. The tier table is in the `review` skill. `*` spans directories.
 
-| Tier | Paths | Review depth |
-|---|---|---|
-| High | <migrations, auth and sessions, middleware, deploy config> | The owner reads every line. Name each changed high-tier file in the summary. |
-| Low | `docs/`, `*.md`, <stylesheets>, text-only changes to <templates> | Read for correctness of the text or style. |
-| Normal | Everything else | Full review. |
+```review-tiers
+critical:
+  - <migrations/*>
+  - <internal/auth/*>
+  - <deploy/*>
+low:
+  - <static/*.css>
+```
+
+On a critical path the owner reads every line. Name each changed critical file in the summary.
 
 ## What failure looks like here
 

@@ -1,0 +1,3 @@
+# case	repo	base	head	tier	expect (regex, case-insensitive)	known bug
+t57-merge-drops-resumes	job-hunting-copilot	b7c6e71^1	54ebbff	3	merge.*(tailored|draft|resume)|(tailored|draft|resume).*merge	A Posting merge deletes the loser's Tailored resumes; draft writes race (fixed in f656e42, 8ceaa8a)
+t73-walk-ends-early	job-hunting-copilot	f092981^1	0ce5209	3	total|pag|walk	A filtered Workday walk stops at the unfiltered total and the title comes from the detail page (fixed in f95447b)

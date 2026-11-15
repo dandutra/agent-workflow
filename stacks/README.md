@@ -7,7 +7,7 @@ Per-project starting files. Copy a profile's contents into a new repo's root (`c
 | Checks | html-validate, prettier, Lighthouse CI | tsc, eslint or biome, vitest, prettier | gofmt, go vet, staticcheck, go test |
 | Edit hook | prettier on file | prettier on file | gofmt on file |
 | Stop gate | none | tsc + vitest if TS changed | build + vet + test if Go, `go.mod`/`go.sum` or an embedded file changed |
-| TDD + 3-axis review | Standards only | full | full |
+| TDD + review | Standards only | tiered (`/review` step 0) | tiered (`/review` step 0) |
 | KB | none | from the first commit | deferred |
 | UI preview | Claude Design, then plain HTML | Storybook, plus Claude Design for new screens | `/_styleguide` dev route |
 | CI + PR template + Claude Action | yes | yes | yes |
@@ -18,7 +18,7 @@ Each profile holds:
 - `CLAUDE.md`: the check command, how work flows, the UI preview route.
 - `.github/`: CI, the Claude review workflow, and the PR template (Testing / Risk / How to revert).
 - `ts` only: a seed `docs/kb/` bundle. Approve its Types table in the project's first grilling.
-- `go` only: a `REVIEW.md` with risk tiers by path. Set the high-tier paths and the repo's failure classes.
+- `ts` and `go`: a `REVIEW.md` whose `review-tiers` block lists critical and low paths for `tier.sh`. Set those paths and the repo's failure classes.
 
 The Claude review workflow needs two things before it can review:
 
